@@ -1,0 +1,25 @@
+<div class="links-container">
+	<div class="links box">
+		<div class="box-title">
+			Links
+		</div>
+		<ul>
+			<% for (var link of links) { %>
+				<li>
+					<a href="<%= link.url %>"><%= link.name %></a>
+				</li>
+			<% } %>
+		</ul>
+	</div>
+	<div class="links box center">
+		<div class="box-title">
+			Word of the day
+		</div>
+		<p>
+			<%= word.word %>:
+		</p>
+		<p>
+			<%= word.definitions[0].text %>
+		</p>
+	</div>
+</div>

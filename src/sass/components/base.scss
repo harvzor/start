@@ -1,0 +1,17 @@
+* {
+	box-sizing:border-box;
+}
+
+html {
+	background-color:$background;
+	background-image:url("/media/background/penguin.png");
+	background-size:cover;
+}
+
+html, body {
+	height:100%;
+}
+
+body {
+	padding:20px;
+}

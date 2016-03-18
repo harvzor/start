@@ -1,0 +1,40 @@
+.links-container {
+	display:flex;
+	align-items:center;
+	flex-direction:column;
+
+	@include screen($xs) {
+		flex-direction:row;
+		height:100%;
+	}
+}
+
+.links {
+	float:left;
+	min-width:45%;
+	width:500px;
+	max-width:100%;
+	margin:30px 2.5%;
+
+	ul {
+		margin:0;
+		padding:0;
+		list-style:none;
+	}
+
+	a {
+		display:block;
+		padding:0 10px;
+		font-size:20px;
+		color:white;
+		text-decoration:none;
+		transform:translateX(0);
+		transition:transform 0.3s;
+
+		&:hover, &:focus {
+			outline:0;
+			background-color:white;
+			color:black;
+		}
+	}
+}

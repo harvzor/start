@@ -1,0 +1,58 @@
+@font-face {
+	font-family:'PerfectDos';
+	src:url('/fonts/Perfect-DOS-VGA-437.ttf') format('truetype');
+}
+
+* {
+	font-family:'PerfectDos';
+	font-size:20px;
+	line-height:1em;
+}
+
+html {
+	font-size:$base-font-size;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin:0.5em 0;
+}
+
+h1 {
+	display:inline;
+	font-size:1em;
+	line-height:1em;
+}
+
+h2 {
+	font-size:1.2em;
+}
+
+h3 {
+	font-size:1.1em;
+}
+
+h4 {
+	font-size:1em;
+}
+
+h5 {
+	font-size:1em;
+}
+
+h6 {
+	font-size:1em;
+}
+
+p {
+	font-size:1em;
+	line-height:1.2em;
+	color:white;
+}
+
+a {
+	line-height:1.2em;
+}
+
+.center {
+	text-align:center;
+}
