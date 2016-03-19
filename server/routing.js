@@ -1,46 +1,17 @@
-var routing = function(app, fs, express, config, logger, wordnik, http) {
+var routing = function(app, fs, express, config, logger, wordnik, http, cheerio, backgrounds, request) {
+	// Render index.
 	app.get('/', function(req, res) {
-		wordnik(http).getWordOfTheDay(function(word) {
-			res.render('index', {
-				dev: config.dev,
-				layout: 'common',
-				relativeUrl: '',
-				links: [
-					{
-						name: 'Google',
-						url: 'https://www.google.co.uk'
-					},
-					{
-						name: 'Maps',
-						url: 'https://google.co.uk/maps'
-					},
-					{
-						name: 'Imgur',
-						url: 'https://www.imgur.com'
-					},
-					{
-						name: '4chan',
-						url: 'https://www.4chan.org'
-					},
-					{
-						name: 'Facebook',
-						url: 'https://www.facebook.com'
-					},
-					{
-						name: 'YouTube',
-						url: 'https://www.youtube.com'
-					},
-					{
-						name: 'Amazon',
-						url: 'https://www.amazon.co.uk'
-					},
-					{
-						name: 'AlternativeTo',
-						url: 'https://alternativeto.net'
-					}
-				],
-				word: word
-			});
+		res.render('index', {
+			dev: config.dev,
+			layout: 'common',
+			relativeUrl: ''
+		});
+	});
+
+	// Backgrounds API
+	app.get('/background', function(req, res) {
+		backgrounds(request, cheerio, fs).getDay(new Date(), function(file) {
+			res.send(file);
 		});
 	});
 

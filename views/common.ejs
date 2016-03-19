@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="StartApp">
 <head lang="en">
 	<title><%= (dev ? "DEV | " : "") %>Start | Harvey Williams</title>
 	<meta charset="UTF-8" />
@@ -7,8 +7,14 @@
 	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 	<link href="/css/main.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body ng-controller="Body" ng-style="{'background-image':'url(' + backgroundUrl + ')'}">
 	<%- body %>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+	<% if (dev) { %>
+		<script src="/js/script.js"></script>
+	<% } else { %>
+		<script src="/js/script.min.js"></script>
+	<% } %>
 </body>
 </html>
 

@@ -1,25 +1,21 @@
 <div class="links-container">
-	<div class="links box">
+	<div class="links box" ng-controller="LinksController">
 		<div class="box-title">
 			Links
 		</div>
 		<ul>
-			<% for (var link of links) { %>
-				<li>
-					<a href="<%= link.url %>"><%= link.name %></a>
-				</li>
-			<% } %>
+			<li ng-repeat="link in links">
+				<a href="{{ link.url }}">{{ link.name }}</a>
+			</li>
 		</ul>
 	</div>
-	<div class="links box center">
+	<div class="links box center" ng-controller="WordController">
 		<div class="box-title">
 			Word of the day
 		</div>
-		<p>
-			<%= word.word %>:
-		</p>
-		<p>
-			<%= word.definitions[0].text %>
-		</p>
+		<p>{{ data.word }}</p>
+		<p>{{ data.definition }}</p>
+		<button ng-click="prevWord()"><span class="tick"><span></span></span>Previous word</button>
+		<button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
 	</div>
 </div>

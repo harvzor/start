@@ -11,6 +11,8 @@ var expressLayouts = require('express-ejs-layouts');
 var fs = require('fs');
 var bunyan = require('bunyan');
 var http = require('http');
+var cheerio = require('cheerio');
+var request = require('request');
 
 var logger = bunyan.createLogger({
 	name: 'portfolio',
@@ -52,9 +54,10 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts)
 
 var wordnik = require('./server/wordnik.js');
+var backgrounds = require('./server/backgrounds.js');
 
 var routing = require('./server/routing.js');
-routing(app, fs, express, config, logger, wordnik, http);
+routing(app, fs, express, config, logger, wordnik, http, cheerio, backgrounds, request);
 
 /////////////////
 // Inititialise
