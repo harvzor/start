@@ -1,55 +1,39 @@
 'use strict';
 
-var backgrounds = function(request, cheerio, fs) {
-	var backgroundsFolderPath = 'public/media/backgrounds/';
+// Required dependencies:
+// request, cheerio, fs, helpers, logger
+var backgrounds = function(dependencies) {
+	for (let key in dependencies) {
+		global[key] = dependencies[key];
+	}
 
-	// Returns a date in "yyyy-MM-dd" format.
-	var dateToString = function(date) {
-		var month = date.getMonth() + 1;
-
-		if (month < 10) {
-			month = '0' + month;
-		}
-
-		return date.getFullYear() + '-' + month + '-' + date.getDate();
-	};
+	var publicBackgroundsPath = '/media/backgrounds/';
+	var backgroundsPath = 'public' + publicBackgroundsPath;
 
 	// Scrapes National Geographic for their background today.
-	var scrapeForImage = function(dateString, callback) {
-		var getHtml = function(callback) {
-			request({
-				url: 'http://photography.nationalgeographic.com/photography/photo-of-the-day/',
-				method: 'GET'
-			}, function(err, response, body) {
-				if (err) {
-					console.log(err);
+	var scrapeForImageUrl = function(callback) {
+		request({
+			method: 'GET',
+			url: 'http://photography.nationalgeographic.com/photography/photo-of-the-day/'
+		}, function(err, response, html) {
+			var $;
 
-					return;
-				}
+			if (err) {
+				logger.info('[backgrounds]', err);
 
-				callback(body);
-			});
-		};
+				return;
+			}
 
-		var saveImage = function(url, fileName, callback) {
-			request.head(url, function(err, res, body){
-				request(url).pipe(fs.createWriteStream(fileName)).on('close', callback);
-			});
-		};
+			$ = cheerio.load(html);
 
-		getHtml(function(html) {
-			var $ = cheerio.load(html);
 			$('.primary_photo img').filter(function() {
-				var $img = $(this);
-				var src = $img.attr('src');
-
-				fs.mkdirSync(backgroundsFolderPath + dateString);
-
-				saveImage('http:' + src, backgroundsFolderPath + dateString + '/image.jpg', function() {
-					callback();
-				});
+				callback('http:' + $(this).attr('src'));
 			});
 		});
+	};
+
+	var saveImage = function(url, filePath, callback) {
+		request(url).pipe(fs.createWriteStream(filePath)).on('close', callback);
 	};
 
 	return {
@@ -62,23 +46,22 @@ var backgrounds = function(request, cheerio, fs) {
 				date = new Date();
 			}
 
-			dateString = dateToString(date);
+			dateString = helpers.dateToString(date);
 
-			fs.readdir(backgroundsFolderPath + dateString, function(err, files) {
-				if (!err) {
-					callback('/media/backgrounds/' + dateString + '/' + files[0]);
-				} else if (dateString == dateToString(new Date())) {
-					scrapeForImage(dateString, function() {
-						fs.readdir(backgroundsFolderPath + dateString, function(err, files) {
-							if (!err) {
-								callback('/media/backgrounds/' +  dateString + '/' + files[0]);
-							}
-						});
+			if (fs.existsSync(backgroundsPath + dateString + '.jpg')) {
+				callback(publicBackgroundsPath + dateString + '.jpg');
+			}
+			// If the file requested is for todays image of the day
+			else if (dateString == helpers.dateToString(new Date())) {
+
+				scrapeForImageUrl(function(url) {
+					saveImage(url, backgroundsPath + dateString + '.jpg', function() {
+						callback(publicBackgroundsPath + dateString + '.jpg');
 					});
-				} else {
-					console.log('error');
-				}
-			});
+				});
+			} else {
+				logger.info('[backgrounds]', 'No background found for date: ' + dateString);
+			}
 		}
 	};
 };

@@ -5,6 +5,8 @@ global.dev = config.dev;
 /////////////////
 // Start website
 /////////////////
+
+// Node modules
 var express = require('express');
 var compression = require('compression');
 var expressLayouts = require('express-ejs-layouts');
@@ -13,6 +15,17 @@ var bunyan = require('bunyan');
 var http = require('http');
 var cheerio = require('cheerio');
 var request = require('request');
+
+// Custom modules
+//var wordnik = require('./server/wordnik.js');
+var helpers = require('./server/helpers.js');
+var backgrounds = require('./server/backgrounds.js')({
+	'request': request,
+	'cheerio': cheerio,
+	'fs': fs, 
+	'helpers': helpers,
+	'logger': logger
+});
 
 var logger = bunyan.createLogger({
 	name: 'portfolio',
@@ -53,11 +66,16 @@ app.set('view engine', 'ejs');
 
 app.use(expressLayouts)
 
-var wordnik = require('./server/wordnik.js');
-var backgrounds = require('./server/backgrounds.js');
-
-var routing = require('./server/routing.js');
-routing(app, fs, express, config, logger, wordnik, http, cheerio, backgrounds, request);
+require('./server/routing.js')({
+	'app': app,
+	'fs': fs,
+	'express': express,
+	'config': config, 
+	'logger': logger,
+	'cheerio': cheerio,
+	'backgrounds': backgrounds, 
+	'request': request
+});
 
 /////////////////
 // Inititialise

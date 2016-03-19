@@ -1,4 +1,12 @@
-var routing = function(app, fs, express, config, logger, wordnik, http, cheerio, backgrounds, request) {
+'use strict';
+
+// Required dependencies:
+// app, fs, express, config, logger, cheerio, backgrounds, request
+var routing = function(dependencies) {
+	for (let key in dependencies) {
+		global[key] = dependencies[key];
+	}
+
 	// Render index.
 	app.get('/', function(req, res) {
 		res.render('index', {
@@ -10,7 +18,7 @@ var routing = function(app, fs, express, config, logger, wordnik, http, cheerio,
 
 	// Backgrounds API
 	app.get('/background', function(req, res) {
-		backgrounds(request, cheerio, fs).getDay(new Date(), function(file) {
+		backgrounds.getDay(new Date(), function(file) {
 			res.send(file);
 		});
 	});
