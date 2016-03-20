@@ -111,6 +111,14 @@ var backgrounds = function(dependencies) {
 			// If the file requested is for todays image of the day
 			else if (dateString == helpers.dateToString(new Date())) {
 				scrapeForImageData(function(data) {
+					var lastData = jsonFileData.get()[jsonFileData.get().length - 1];
+
+					// If a new image hasn't been uploaded yet.
+					if (data.get('name') == lastData.name) {
+						callback(publicBackgroundsPath + lastData.date + '.jpg');
+						return;
+					}
+
 					saveImage(data.get('url'), backgroundsPath + dateString + '.jpg', function() {
 						callback(publicBackgroundsPath + dateString + '.jpg');
 					});
