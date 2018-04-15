@@ -15,30 +15,29 @@ var bunyan = require('bunyan');
 var http = require('http');
 var cheerio = require('cheerio');
 var request = require('request');
+var natgeo = require('national-geographic-api').API
 
 // Custom modules
 //var wordnik = require('./server/wordnik.js');
 var helpers = require('./server/helpers.js');
-var backgrounds = require('./server/backgrounds.js')({
-	dataPath: 'data/backgrounds.json',
-	publicBackgroundsPath: '/media/backgrounds/',
-	backgroundsPath:  'public/media/backgrounds/'
-});
 
 var logger = bunyan.createLogger({
 	name: 'portfolio',
 	streams: [
 		{
 			level: 'info',
-			path: 'logs/log.txt'
+			path: 'logs/log.txt',
+			stream: process.stdout
 		},
 		{
 			level: 'warn',
-			path: 'logs/log.txt'
+			path: 'logs/log.txt',
+			stream: process.stdout
 		},
 		{
 			level: 'error',
-			path: 'logs/log.txt'
+			path: 'logs/log.txt',
+			stream: process.stdout
 		}
 	]
 });
@@ -68,10 +67,10 @@ require('./server/routing.js')({
 	'app': app,
 	'fs': fs,
 	'express': express,
-	'config': config, 
+	'config': config,
 	'logger': logger,
 	'cheerio': cheerio,
-	'backgrounds': backgrounds, 
+	'natgeo': natgeo,
 	'request': request
 });
 

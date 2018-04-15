@@ -7,6 +7,10 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 			url: 'https://www.google.co.uk'
 		},
 		{
+			name: 'Duck Duck Go',
+			url: 'https://duckduckgo.com/'
+		},
+		{
 			name: 'Maps',
 			url: 'https://google.co.uk/maps'
 		},
@@ -26,13 +30,23 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 			name: 'YouTube',
 			url: 'https://www.youtube.com'
 		},
+		/*
+			{
+				name: 'Plex',
+				url: 'https://bigkthx.com/web/index.html'
+			},
+		*/
 		{
 			name: 'Amazon',
 			url: 'https://www.amazon.co.uk'
 		},
 		{
 			name: 'AlternativeTo',
-			url: 'https://alternativeto.net'
+			url: 'https://alternativeto.net/'
+		},
+		{
+			name: 'CoinLib',
+			url: 'https://coinlib.io/'
 		}
 	];
 }]);
@@ -42,7 +56,8 @@ StartApp.controller('Body', ['$scope', '$http', function($scope, $http) {
 		method: 'GET',
 		url: '/background'
 	}).then(function successCallback(response) {
-		$scope.backgroundUrl = '/media/backgrounds/' + response.data.date + '.jpg';
+		//$scope.backgroundUrl = '/media/backgrounds/' + response.data.date + '.jpg';
+		$scope.backgroundUrl = response.data.data[0].attributes.image.uri;
 	});
 }]);
 
@@ -60,7 +75,7 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 		date.setDate(date.getDate() + dayOffset);
 
 		var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-		
+
 		$http({
 			method: 'GET',
 			url: '//api.wordnik.com/v4/words.json/wordOfTheDay?api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5&date=' + dateString

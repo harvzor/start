@@ -1,7 +1,7 @@
 'use strict';
 
 // Required dependencies:
-// app, fs, express, config, logger, cheerio, backgrounds, request
+// app, fs, express, config, logger, cheerio, natgeo, request
 var routing = function(dependencies) {
 	for (let key in dependencies) {
 		global[key] = dependencies[key];
@@ -18,25 +18,36 @@ var routing = function(dependencies) {
 
 	// Backgrounds API
 	app.get('/background', function(req, res) {
-		backgrounds.getDay(new Date(), function(data) {
-			res.setHeader('Content-Type', 'application/json');
+		natgeo.getPhotoOfDay('DAY')
+			.then((result) => {
+				res.setHeader('Content-Type', 'application/json');
 
-			if (typeof req.query.pretty !== 'undefined' && req.query.pretty.toLowerCase() === 'true') {
-				res.send(JSON.stringify(data, null, 4));
-			} else {
-				res.send(JSON.stringify(data));
-			}
-		});
+				res.send(result);
+			});
+
+		/*
+			backgrounds.getDay(new Date(), function(data) {
+				res.setHeader('Content-Type', 'application/json');
+
+				if (typeof req.query.pretty !== 'undefined' && req.query.pretty.toLowerCase() === 'true') {
+					res.send(JSON.stringify(data, null, 4));
+				} else {
+					res.send(JSON.stringify(data));
+				}
+			});
+		*/
 	});
 
-	// Backgrounds API
-	app.get('/api/background/get', function(req, res) {
-		var date = new Date(req.query.date);
+	/*
+		// Backgrounds API
+		app.get('/api/background/get', function(req, res) {
+			var date = new Date(req.query.date);
 
-		backgrounds.getDay(date, function(file) {
-			res.send(file);
+			backgrounds.getDay(date, function(file) {
+				res.send(file);
+			});
 		});
-	});
+	*/
 
 	/////////////////
 	// Statuses
@@ -71,4 +82,3 @@ var routing = function(dependencies) {
 };
 
 module.exports = routing;
-
