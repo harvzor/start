@@ -20,11 +20,9 @@ var request = require('request');
 //var wordnik = require('./server/wordnik.js');
 var helpers = require('./server/helpers.js');
 var backgrounds = require('./server/backgrounds.js')({
-	'request': request,
-	'cheerio': cheerio,
-	'fs': fs, 
-	'helpers': helpers,
-	'logger': logger
+	dataPath: 'data/backgrounds.json',
+	publicBackgroundsPath: '/media/backgrounds/',
+	backgroundsPath:  'public/media/backgrounds/'
 });
 
 var logger = bunyan.createLogger({

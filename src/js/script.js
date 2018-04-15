@@ -42,7 +42,7 @@ StartApp.controller('Body', ['$scope', '$http', function($scope, $http) {
 		method: 'GET',
 		url: '/background'
 	}).then(function successCallback(response) {
-		$scope.backgroundUrl = response.data;
+		$scope.backgroundUrl = '/media/backgrounds/' + response.data.date + '.jpg';
 	});
 }]);
 
@@ -92,4 +92,14 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 	};
 
 	getWord(0);
+}]);
+
+StartApp.controller('AboutImageController', ['$scope', '$http', function($scope, $http) {
+	$http({
+		method: 'GET',
+		url: '/background'
+	}).then(function successCallback(response) {
+		console.log(response.data);
+		$scope.data = response.data;
+	});
 }]);

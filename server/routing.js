@@ -18,7 +18,22 @@ var routing = function(dependencies) {
 
 	// Backgrounds API
 	app.get('/background', function(req, res) {
-		backgrounds.getDay(new Date(), function(file) {
+		backgrounds.getDay(new Date(), function(data) {
+			res.setHeader('Content-Type', 'application/json');
+
+			if (typeof req.query.pretty !== 'undefined' && req.query.pretty.toLowerCase() === 'true') {
+				res.send(JSON.stringify(data, null, 4));
+			} else {
+				res.send(JSON.stringify(data));
+			}
+		});
+	});
+
+	// Backgrounds API
+	app.get('/api/background/get', function(req, res) {
+		var date = new Date(req.query.date);
+
+		backgrounds.getDay(date, function(file) {
 			res.send(file);
 		});
 	});

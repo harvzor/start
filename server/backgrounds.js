@@ -1,16 +1,29 @@
 'use strict';
 
 // Required dependencies:
-// request, cheerio, fs, helpers, logger
-var backgrounds = function(dependencies) {
-	for (let key in dependencies) {
-		global[key] = dependencies[key];
-	}
+// config = {
+//     dataPath: '', // The path to the file where image information should be stored.
+//     publicBackgroundsPath: '', // The external URL to the file.
+//     backgroundsPath: '' // The internal path to the file.
+// }
+var backgrounds = function(config) {
+	// Dependencies.
+	var fs = require('fs');
+	var cheerio = require('cheerio');
+	var request = require('request');
 
-	var publicBackgroundsPath = '/media/backgrounds/';
-	var backgroundsPath = 'public' + publicBackgroundsPath;
+	var dateToString = function(date) {
+		var month = date.getMonth() + 1;
 
-	var backgroundData = function() { 
+		if (month < 10) {
+			month = '0' + month;
+		}
+
+		return date.getFullYear() + '-' + month + '-' + date.getDate();
+	};
+
+	// A model that can be stored in the JSON file.
+	var backgroundModel = function() { 
 		var data = {
 			url: '',
 			date: '',
@@ -35,12 +48,17 @@ var backgrounds = function(dependencies) {
 	};
 
 	// Scrapes National Geographic for their background today.
-	var scrapeForImageData = function(callback) {
+	var scrapeForImageData = function(callback, url) {
+		// If the url is undefined, set it as the image of the day.
+		if (typeof url == 'undefined') {
+			url = 'http://photography.nationalgeographic.com/photography/photo-of-the-day/';
+		}
+
 		request({
 			method: 'GET',
-			url: 'http://photography.nationalgeographic.com/photography/photo-of-the-day/'
+			url: url
 		}, function(err, response, html) {
-			var data = new backgroundData();
+			var data = new backgroundModel();
 			var $;
 
 			if (err) {
@@ -52,7 +70,7 @@ var backgrounds = function(dependencies) {
 			$ = cheerio.load(html);
 
 			data.set('url', 'http:' + $('.primary_photo img').attr('src'));
-			data.set('date', helpers.dateToString(new Date()));
+			data.set('date', dateToString(new Date($('.publication_time').eq(0).text())));
 			data.set('name', $('h1').text());
 			data.set('credit', $('#caption .credit').text());
 			data.set('description', $('#caption .credit').next().text());
@@ -66,13 +84,12 @@ var backgrounds = function(dependencies) {
 	};
 
 	var jsonFileDataConstructor = function() {
-		var dataPath = 'data/backgrounds.json';
 		var data = null;
 
 		return {
 			get: function(loadNew) {
 				if (loadNew || data == null) {
-					return JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+					return JSON.parse(fs.readFileSync(config.dataPath, 'utf8'));
 				}
 
 				return data;
@@ -82,7 +99,7 @@ var backgrounds = function(dependencies) {
 
 				data.push(newData);
 
-				fs.writeFile(dataPath, JSON.stringify(data), function(err) {
+				fs.writeFile(config.dataPath, JSON.stringify(data), function(err) {
 					if (err) {
 						logger.info('[backgrounds] Error writing to backgrounds.json');
 					}
@@ -98,29 +115,34 @@ var backgrounds = function(dependencies) {
 		// date is optional
 		getDay: function(date, callback) {
 			var dateString = '';
+			var lastData = jsonFileData.get()[jsonFileData.get().length > 0 ? jsonFileData.get().length - 1 : 0];
 
 			if (typeof date === 'undefined') {
 				date = new Date();
 			}
 
-			dateString = helpers.dateToString(date);
+			dateString = dateToString(date);
 
-			if (fs.existsSync(backgroundsPath + dateString + '.jpg')) {
-				callback(publicBackgroundsPath + dateString + '.jpg');
+			if (lastData.date == dateString) {
+				callback(lastData);
 			}
 			// If the file requested is for todays image of the day
-			else if (dateString == helpers.dateToString(new Date())) {
+			else if (dateString == dateToString(new Date())) {
 				scrapeForImageData(function(data) {
-					var lastData = jsonFileData.get()[jsonFileData.get().length - 1];
 
-					// If a new image hasn't been uploaded yet.
-					if (data.get('name') == lastData.name) {
-						callback(publicBackgroundsPath + lastData.date + '.jpg');
-						return;
+					// If there is data in the JSON.
+					if (jsonFileData.get().length > 0) {
+
+						// If a new image hasn't been uploaded yet, just return the last image.
+						if (data.get('name') == lastData.name) {
+							callback(config.publicBackgroundsPath + lastData.date + '.jpg');
+
+							return;
+						}
 					}
 
-					saveImage(data.get('url'), backgroundsPath + dateString + '.jpg', function() {
-						callback(publicBackgroundsPath + dateString + '.jpg');
+					saveImage(data.get('url'), config.backgroundsPath + dateString + '.jpg', function() {
+						callback(data.getAll());
 					});
 
 					jsonFileData.set(data.getAll());
