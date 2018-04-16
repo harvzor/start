@@ -19,12 +19,10 @@
 		<button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
 	</div>
 </div>
-<!--
-	<div class="box about-image" ng-controller="AboutImageController">
-		<div class="box-title">
-			About image
-		</div>
-		<p>{{ data.name }}</p>
-		<p>{{ data.description }}</p>
+<div class="box about-image" ng-controller="AboutImageController">
+	<div class="box-title">
+		About image
 	</div>
--->
+	<h2>{{ data.title }}</h2>
+	<div ng-bind-html="data.description"></div>
+</div>

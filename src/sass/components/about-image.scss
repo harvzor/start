@@ -1,0 +1,8 @@
+.about-image {
+    margin:0 2.5%;
+    transition:0.3s;
+
+    &:hover {
+        transform:translateY(-100%);
+    }
+}

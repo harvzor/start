@@ -109,12 +109,16 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 	getWord(0);
 }]);
 
-StartApp.controller('AboutImageController', ['$scope', '$http', function($scope, $http) {
+StartApp.controller('AboutImageController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 	$http({
 		method: 'GET',
 		url: '/background'
 	}).then(function successCallback(response) {
-		console.log(response.data);
-		$scope.data = response.data;
+		var data = response.data.data[0].attributes.image;
+
+		$scope.data = {
+			title: data.title,
+			description: $sce.trustAsHtml(data.caption)
+		};
 	});
 }]);
