@@ -25,7 +25,7 @@ button {
 	border:none;
 	color:white;
 
-	&:hover, &:focus {
+	&:hover {
 		.tick span:before {
 			content:'x';
 		}
@@ -61,9 +61,6 @@ button {
 			width:12px;
 			text-align:center;
 			line-height:13px;
-
-			&:before {
-			}
 		}
 	}
 }

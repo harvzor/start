@@ -70,7 +70,7 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 		definition: ''
 	};
 
-	var getWord = function(dayOffset) {
+	var getWord = function(dayOffset, callback) {
 		var date = new Date();
 		date.setDate(date.getDate() + dayOffset);
 
@@ -84,26 +84,28 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 				word: response.data.word,
 				definition: response.data.definitions[0].text
 			};
+
+			callback();
 		});
 	};
 
-
 	$scope.prevWord = function() {
-		dayOffset--;
+		getWord(dayOffset, function() {
+			dayOffset--;
 
-		$scope.isNextWord = true;
-
-		getWord(dayOffset);
+			$scope.isNextWord = true;
+		});
 	};
 
 	$scope.nextWord = function() {
-		dayOffset++;
+		getWord(dayOffset, function() {
 
-		if (dayOffset == 0) {
-			$scope.isNextWord = false;
-		}
+			dayOffset++;
 
-		getWord(dayOffset);
+			if (dayOffset == 0) {
+				$scope.isNextWord = false;
+			}
+		});
 	};
 
 	getWord(0);
