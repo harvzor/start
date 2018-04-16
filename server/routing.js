@@ -7,6 +7,8 @@ var routing = function(dependencies) {
 		global[key] = dependencies[key];
 	}
 
+	let backgroundData = null;
+
 	// Render index.
 	app.get('/', function(req, res) {
 		res.render('index', {
@@ -18,11 +20,15 @@ var routing = function(dependencies) {
 
 	// Backgrounds API
 	app.get('/background', function(req, res) {
+		res.setHeader('Content-Type', 'application/json');
+
+		if (backgroundData != null) {
+			res.send(backgroundData);
+		}
+
 		natgeo.getPhotoOfDay('DAY')
 			.then((result) => {
-				res.setHeader('Content-Type', 'application/json');
-
-				res.send(result);
+				backgroundData = result;
 			});
 
 		/*
