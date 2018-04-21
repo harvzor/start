@@ -5,24 +5,24 @@
 		</div>
 		<ul>
 			<li ng-repeat="linkGroup in links">
-				<a href="{{ link.url }}" ng-repeat="link in linkGroup">{{ link.name }}</a>
+				<a href="{{ link.url }}" ng-repeat="link in linkGroup" ng-bind="link.name"></a>
 			</li>
 		</ul>
 	</div>
-	<div class="links box center" ng-controller="WordController" ng-cloak>
+	<div class="links box center" ng-controller="WordController" ng-show="loaded" ng-cloak>
 		<div class="box-title">
 			Word of the day
 		</div>
-		<p>{{ data.word }}</p>
-		<p>{{ data.definition }}</p>
+		<p ng-bind="data.work"></p>
+		<p ng-bind="data.definition"></p>
 		<button ng-click="prevWord()"><span class="tick"><span></span></span>Previous word</button>
 		<button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
 	</div>
 </div>
-<div class="box about-image" ng-controller="AboutImageController" ng-cloak>
+<div class="box about-image" ng-controller="AboutImageController" ng-show="loaded" ng-cloak>
 	<div class="box-title">
 		About image
 	</div>
-	<h2>{{ data.title }}</h2>
+	<h2 ng-bind="data.title"></h2>
 	<div ng-bind-html="data.description"></div>
 </div>

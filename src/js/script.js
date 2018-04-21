@@ -96,6 +96,7 @@ StartApp.controller('Body', ['$scope', '$http', function($scope, $http) {
 StartApp.controller('WordController', ['$scope', '$http', function($scope, $http) {
 	var dayOffset = 0;
 
+	$scope.loaded = false;
 	$scope.isNextWord = false;
 	$scope.data = {
 		word: '',
@@ -116,6 +117,8 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 				word: response.data.word,
 				definition: response.data.definitions[0].text
 			};
+
+			$scope.loaded = true;
 
 			callback();
 		});
@@ -144,6 +147,8 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 }]);
 
 StartApp.controller('AboutImageController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+	$scope.loaded = false;
+
 	$http({
 		method: 'GET',
 		url: '/background'
@@ -154,5 +159,7 @@ StartApp.controller('AboutImageController', ['$scope', '$http', '$sce', function
 			title: data.title,
 			description: $sce.trustAsHtml(data.caption)
 		};
+
+		$scope.loaded = true;
 	});
 }]);
