@@ -5,7 +5,11 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
-	<link href="/css/main.css" rel="stylesheet" type="text/css">
+	<% if (dev) { /* So that sourcemaps are loaded. */ %>
+		<link href="/css/main.css" rel="stylesheet" type="text/css">
+	<% } else { %>
+		<style><%- css %></style>
+	<% } %>
 </head>
 <body ng-controller="Body" ng-style="{'background-image':'url(' + backgroundUrl + ')'}">
 	<%- body %>
@@ -17,4 +21,3 @@
 	<% } %>
 </body>
 </html>
-

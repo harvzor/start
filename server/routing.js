@@ -8,13 +8,25 @@ var routing = function(dependencies) {
 	}
 
 	let backgroundData = null;
+	let css = null;
+
+	fs.readFile('./public/css/main.css', 'utf8', (err, data) => {
+		if (err) {
+			logger.error(err);
+		} else {
+			css = data;
+
+			//logger.info('Loaded css file...', css);
+		}
+	});
 
 	// Render index.
 	app.get('/', function(req, res) {
 		res.render('index', {
 			dev: config.dev,
 			layout: 'common',
-			relativeUrl: ''
+			relativeUrl: '',
+			css: css
 		});
 	});
 
@@ -71,7 +83,8 @@ var routing = function(dependencies) {
 			layout: 'common',
 			relativeUrl: '404',
 			pageTitle: 'Status: 404',
-			bodyText: '<p>You\'re looking for a page that doesn\'t exist...</p>'
+			bodyText: '<p>You\'re looking for a page that doesn\'t exist...</p>',
+			css: css
 		});
 	});
 
@@ -82,7 +95,8 @@ var routing = function(dependencies) {
 			layout: 'common',
 			relativeUrl: '500',
 			pageTitle: 'Status: 500',
-			bodyText: '<p>So sorry, but a problem occured! Please email me if this problem persists.</p>'
+			bodyText: '<p>So sorry, but a problem occured! Please email me if this problem persists.</p>',
+			css: css
 		});
 	});
 };

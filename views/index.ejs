@@ -1,5 +1,5 @@
 <div class="links-container">
-	<div class="links box" ng-controller="LinksController">
+	<div class="links box" ng-controller="LinksController" ng-cloak>
 		<div class="box-title">
 			Links
 		</div>
@@ -9,7 +9,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="links box center" ng-controller="WordController">
+	<div class="links box center" ng-controller="WordController" ng-cloak>
 		<div class="box-title">
 			Word of the day
 		</div>
@@ -19,7 +19,7 @@
 		<button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
 	</div>
 </div>
-<div class="box about-image" ng-controller="AboutImageController">
+<div class="box about-image" ng-controller="AboutImageController" ng-cloak>
 	<div class="box-title">
 		About image
 	</div>
