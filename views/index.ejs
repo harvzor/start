@@ -4,8 +4,8 @@
 			Links
 		</div>
 		<ul>
-			<li ng-repeat="link in links">
-				<a href="{{ link.url }}">{{ link.name }}</a>
+			<li ng-repeat="linkGroup in links">
+				<a href="{{ link.url }}" ng-repeat="link in linkGroup">{{ link.name }}</a>
 			</li>
 		</ul>
 	</div>

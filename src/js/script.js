@@ -2,52 +2,84 @@ var StartApp = angular.module('StartApp', []);
 
 StartApp.controller('LinksController', ['$scope', function($scope) {
 	$scope.links = [
-		{
-			name: 'Google',
-			url: 'https://www.google.co.uk'
-		},
-		{
-			name: 'Duck Duck Go',
-			url: 'https://duckduckgo.com/'
-		},
-		{
-			name: 'Maps',
-			url: 'https://google.co.uk/maps'
-		},
-		{
-			name: 'Imgur',
-			url: 'https://www.imgur.com'
-		},
-		{
-			name: '4chan',
-			url: 'https://www.4chan.org'
-		},
-		{
-			name: 'Facebook',
-			url: 'https://www.facebook.com'
-		},
-		{
-			name: 'YouTube',
-			url: 'https://www.youtube.com'
-		},
-		/*
+		[
 			{
-				name: 'Plex',
-				url: 'https://bigkthx.com/web/index.html'
+				name: 'Localhost',
+				url: 'http://localhost:3000'
+			}
+		],
+		[
+			{
+				name: 'Google',
+				url: 'https://www.google.co.uk'
 			},
-		*/
-		{
-			name: 'Amazon',
-			url: 'https://www.amazon.co.uk'
-		},
-		{
-			name: 'AlternativeTo',
-			url: 'https://alternativeto.net/'
-		},
-		{
-			name: 'CoinLib',
-			url: 'https://coinlib.io/'
-		}
+			{
+				name: 'Duck Duck Go',
+				url: 'https://start.duckduckgo.com'
+			},
+			{
+				name: 'Maps',
+				url: 'https://google.co.uk/maps'
+			}
+		],
+		[
+			{
+				name: 'Imgur',
+				url: 'https://www.imgur.com'
+			},
+			{
+				name: '4chan',
+				url: 'https://www.4chan.org'
+			},
+			{
+				name: 'Facebook',
+				url: 'https://www.facebook.com'
+			},
+		],
+		[
+			{
+				name: 'YouTube',
+				url: 'https://www.youtube.com'
+			},
+			{
+				name: 'Spotify',
+				url: 'https://open.spotify.com'
+			},
+			/*
+				{
+					name: 'Plex',
+					url: 'https://bigkthx.com/web/index.html'
+				},
+			*/
+		],
+		[
+			{
+				name: 'Amazon',
+				url: 'https://www.amazon.co.uk'
+			},
+			{
+				name: 'AlternativeTo',
+				url: 'https://alternativeto.net'
+			},
+			{
+				name: 'Toggl',
+				url: 'https://www.toggl.com/app/timer'
+			}
+		],
+		[
+			{
+				name: 'CoinLib',
+				url: 'https://coinlib.io'
+			},
+			{
+				name: 'Coin Market Cap',
+				url: 'https://coinmarketcap.com'
+			},
+			{
+				name: 'EthTrader',
+				url: 'https://www.reddit.com/r/ethtrader/'
+			},
+		]
 	];
 }]);
 
