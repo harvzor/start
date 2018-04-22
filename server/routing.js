@@ -10,6 +10,14 @@ var routing = function(dependencies) {
 	let backgroundData = null;
 	let css = null;
 
+	var setBackground = () => {
+		natgeo.getPhotoOfDay('DAY')
+			.then((result) => {
+				backgroundData = result;
+			});
+	};
+
+
 	fs.readFile('./public/css/main.css', 'utf8', (err, data) => {
 		if (err) {
 			logger.error(err);
@@ -38,10 +46,7 @@ var routing = function(dependencies) {
 			res.send(backgroundData);
 		}
 
-		natgeo.getPhotoOfDay('DAY')
-			.then((result) => {
-				backgroundData = result;
-			});
+		setBackground();
 
 		/*
 			backgrounds.getDay(new Date(), function(data) {
