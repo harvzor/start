@@ -68,6 +68,16 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 		],
 		[
 			{
+				name: 'GitHub',
+				url: 'https://github.com/'
+			},
+			{
+				name: 'Stack Overflow',
+				url: 'https://stackoverflow.com/'
+			}
+		],
+		[
+			{
 				name: 'CoinLib',
 				url: 'https://coinlib.io'
 			},
