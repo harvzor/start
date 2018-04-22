@@ -72,7 +72,7 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 				url: 'https://coinlib.io'
 			},
 			{
-				name: 'Coin Market Cap',
+				name: 'CoinMarketCap',
 				url: 'https://coinmarketcap.com'
 			},
 			{
