@@ -5,11 +5,18 @@
 body {
 	background-color:black;
 	background-size:cover;
-	overflow:hidden;
+	background-position:fixed;
+
+
+	@include screen($xs) {
+		overflow:hidden;
+	}
 }
 
 html, body {
-	height:100%;
+	@include screen($xs) {
+		height:100%;
+	}
 }
 
 body {

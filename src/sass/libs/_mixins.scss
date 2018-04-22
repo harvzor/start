@@ -50,22 +50,22 @@
 	margin:$font-styling-margin;
 	color:$font-styling-color;
 	font-size:$font-styling-size;
-	font-family:$font-styling-family;  
+	font-family:$font-styling-family;
 	line-height:$font-styling-lineheight;
 }
 
 @mixin transition ($transition) {
-	-webkit-transition:$transition; 
-	-moz-transition:$transition; 
-	-o-transition:$transition; 
-	 transition:$transition; 
+	-webkit-transition:$transition;
+	-moz-transition:$transition;
+	-o-transition:$transition;
+	 transition:$transition;
 }
 
 @mixin transform ($transform) {
-	-webkit-transform:$transform; 
-	-moz-transform:$transform; 
+	-webkit-transform:$transform;
+	-moz-transform:$transform;
 	-ms-transform:$transform;
-	-o-transform:$transform; 
+	-o-transform:$transform;
 }
 
 @mixin background-size ($background-size) {

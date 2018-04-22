@@ -6,6 +6,11 @@
 	background-color:rgba(0, 0, 0, 0.5);
 	opacity:0.5;
 	transition:0.1s;
+	text-align:center;
+
+	@include screen($xs) {
+		text-align:left;
+	}
 
 	&:hover, &:focus {
 		opacity:1;
@@ -22,6 +27,7 @@
 	transform:translateX(-50%) translateY(-50%);
 	font-size:24px;
 	line-height:30px;
+	white-space:nowrap;
 
 	&:before {
 		z-index:-1;

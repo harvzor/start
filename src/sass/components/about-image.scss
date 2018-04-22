@@ -1,6 +1,11 @@
 .about-image {
-    margin:0 2.5%;
+    margin:30px 2.5%;
     transition:0.3s;
+
+    @include screen($xs) {
+        margin-top:0;
+        margin-bottom:0;
+    }
 
     &.about-image--show {
         transform:translateY(-100%);
