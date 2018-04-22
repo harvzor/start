@@ -148,6 +148,7 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 
 StartApp.controller('AboutImageController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 	$scope.loaded = false;
+	$scope.show = false;
 
 	$http({
 		method: 'GET',

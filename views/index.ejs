@@ -19,8 +19,8 @@
 		<button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
 	</div>
 </div>
-<div class="box about-image" ng-controller="AboutImageController" ng-show="loaded" ng-cloak>
-	<div class="box-title">
+<div class="box about-image" ng-class="{ 'about-image--show': show }" ng-controller="AboutImageController" ng-show="loaded" ng-cloak>
+	<div class="box-title" ng-click="show = !show">
 		About image
 	</div>
 	<h2 ng-bind="data.title"></h2>
