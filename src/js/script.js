@@ -113,7 +113,7 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 		definition: ''
 	};
 
-	var getWord = function(dayOffset, callback) {
+	var getWord = function(callback) {
 		var date = new Date();
 		date.setDate(date.getDate() + dayOffset);
 
@@ -130,30 +130,31 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 
 			$scope.loaded = true;
 
-			callback();
+			if (typeof callback !== 'undefined') {
+				callback();
+			}
 		});
 	};
 
 	$scope.prevWord = function() {
-		getWord(dayOffset, function() {
-			dayOffset--;
+		dayOffset--;
 
+		getWord(function() {
 			$scope.isNextWord = true;
 		});
 	};
 
 	$scope.nextWord = function() {
-		getWord(dayOffset, function() {
+		dayOffset++;
 
-			dayOffset++;
-
+		getWord(function() {
 			if (dayOffset == 0) {
 				$scope.isNextWord = false;
 			}
 		});
 	};
 
-	getWord(0);
+	getWord();
 }]);
 
 StartApp.controller('AboutImageController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
