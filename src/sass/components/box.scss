@@ -4,6 +4,12 @@
 	padding:10px;
 	box-shadow:5px 5px 0 0 black;
 	background-color:rgba(0, 0, 0, 0.5);
+	opacity:0.5;
+	transition:0.1s;
+
+	&:hover, &:focus {
+		opacity:1;
+	}
 }
 
 .box-title {
