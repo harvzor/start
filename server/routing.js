@@ -7,16 +7,32 @@ var routing = function(dependencies) {
 		global[key] = dependencies[key];
 	}
 
-	let backgroundData = null;
+	let backgroundData = {};
 	let css = null;
 
-	var setBackground = () => {
-		natgeo.getPhotoOfDay('DAY')
-			.then((result) => {
-				backgroundData = result;
-			});
-	};
+	/**
+	 * Get the background data, either from cache or from the NatGeo website.
+	 * @param {string} date Date in ISO format.
+	 */
+	var getBackgroundAsync = (date) => {
+		let promise = new Promise((resolve, reject) => {
+			// Data already loaded.
+			if (typeof backgroundData[date] !== 'undefined') {
+				resolve(backgroundData[date]);
 
+				return;
+			}
+
+			natgeo.getPhotoOfDay(date)
+				.then((result) => {
+					backgroundData[date] = result;
+
+					resolve(result);
+				});
+		});
+
+		return promise;
+	};
 
 	fs.readFile('./public/css/main.css', 'utf8', (err, data) => {
 		if (err) {
@@ -39,14 +55,13 @@ var routing = function(dependencies) {
 	});
 
 	// Backgrounds API
-	app.get('/background', function(req, res) {
+	app.get('/background', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
 
-		if (backgroundData != null) {
-			res.send(backgroundData);
-		}
-
-		setBackground();
+		getBackgroundAsync(req.query.date)
+			.then((data) => {
+				res.send(data);
+			});
 
 		/*
 			backgrounds.getDay(new Date(), function(data) {

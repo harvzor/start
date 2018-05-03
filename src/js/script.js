@@ -1,5 +1,31 @@
 var StartApp = angular.module('StartApp', []);
 
+var helpers = function() {
+	var toDateIso = function(date) {
+		return date.toISOString().substring(0, 10)
+	};
+
+	return {
+		toDateIso: toDateIso
+	};
+}();
+
+StartApp.factory('BackgroundApi', ['$http', function($http) {
+	var get = function(date) {
+		return $http({
+			method: 'GET',
+			url: '/background',
+			params: {
+				date: date
+			}
+		});
+	};
+
+	return {
+		get: get
+	}
+}]);
+
 StartApp.controller('LinksController', ['$scope', function($scope) {
 	$scope.links = [
 		[
@@ -93,14 +119,84 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 	];
 }]);
 
-StartApp.controller('Body', ['$scope', '$http', function($scope, $http) {
-	$http({
-		method: 'GET',
-		url: '/background'
-	}).then(function successCallback(response) {
-		//$scope.backgroundUrl = '/media/backgrounds/' + response.data.date + '.jpg';
-		$scope.backgroundUrl = response.data.data[0].attributes.image.uri;
-	});
+StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {
+	// Set to -1 as they might not have released the image for today yet, and their API throws an error if you request
+	// one for the future!
+	let dayOffset = -1;
+
+	$scope.loaded = false;
+	$scope.show = false;
+	$scope.isNextBackground = false;
+	$scope.hide = false;
+
+	let getBackground = () => {
+		let date = new Date();
+		date.setDate(date.getDate() + dayOffset);
+
+		let promise = new Promise((resolve, reject) => {
+			BackgroundApi.get(helpers.toDateIso(date))
+				.then(function (response) {
+					var data = response.data.data[0].attributes;
+
+					//$scope.backgroundUrl = '/media/backgrounds/' + response.data.date + '.jpg';
+
+					$scope.data = {
+						backgroundUrl: data.image.uri,
+						title: data.image.title,
+						description: $sce.trustAsHtml(data.image.caption),
+						link: data.uri
+					};
+
+					$scope.loaded = true;
+
+					resolve();
+				});
+		});
+
+		return promise;
+	};
+
+	$scope.prevBackground = () => {
+		dayOffset--;
+
+		getBackground()
+			.then(() => {
+				$scope.isNextBackground = true;
+
+				$scope.$apply();
+			});
+	};
+
+	$scope.nextBackground = () => {
+		dayOffset++;
+
+		getBackground()
+			.then(() => {
+				if (dayOffset == -1) {
+					$scope.isNextBackground = false;
+
+					$scope.$apply();
+				}
+			});
+	};
+
+	getBackground();
+
+	$scope.press = (key) => {
+		console.log(key);
+
+		if (key.keyCode == 27) {
+			$scope.hide = !$scope.hide;
+		}
+
+		if (key.keyCode == 37) {
+			$scope.prevBackground();
+		}
+
+		if (key.keyCode == 39) {
+			$scope.nextBackground();
+		}
+	};
 }]);
 
 StartApp.controller('WordController', ['$scope', '$http', function($scope, $http) {
@@ -157,21 +253,5 @@ StartApp.controller('WordController', ['$scope', '$http', function($scope, $http
 	getWord();
 }]);
 
-StartApp.controller('AboutImageController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
-	$scope.loaded = false;
-	$scope.show = false;
-
-	$http({
-		method: 'GET',
-		url: '/background'
-	}).then(function successCallback(response) {
-		var data = response.data.data[0].attributes.image;
-
-		$scope.data = {
-			title: data.title,
-			description: $sce.trustAsHtml(data.caption)
-		};
-
-		$scope.loaded = true;
-	});
+StartApp.controller('AboutImageController', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {
 }]);

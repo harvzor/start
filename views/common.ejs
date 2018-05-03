@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="StartApp">
-<head lang="en">
-	<title><%= (dev ? "DEV | " : "") %>Start | Harvey Williams</title>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
-	<% if (dev) { /* So that sourcemaps are loaded. */ %>
-		<link href="/css/main.css" rel="stylesheet" type="text/css">
-	<% } else { %>
-		<style><%- css %></style>
-	<% } %>
-</head>
-<body ng-controller="Body" ng-style="{'background-image':'url(' + backgroundUrl + ')'}">
+	<head lang="en">
+		<title><%= (dev ? "DEV | " : "") %>Start | Harvey Williams</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+		<% if (dev) { /* So that sourcemaps are loaded. */ %>
+			<link href="/css/main.css" rel="stylesheet" type="text/css">
+		<% } else { %>
+			<style><%- css %></style>
+		<% } %>
+	</head>
 	<%- body %>
 	<script src="/js/angular.min.js"></script>
 	<% if (dev) { %>
@@ -19,5 +18,4 @@
 	<% } else { %>
 		<script src="/js/script.min.js"></script>
 	<% } %>
-</body>
 </html>
