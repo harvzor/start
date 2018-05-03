@@ -6,6 +6,7 @@ var cssnano = require('gulp-cssnano');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var babel = require('gulp-babel');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var notifier = require('node-notifier');
@@ -44,7 +45,7 @@ gulp.task('styles', function() {
 		});
 	});
 });
- 
+
 // Scripts - compile custom js
 gulp.task('scripts', function() {
 	return gulp.src([
@@ -61,6 +62,9 @@ gulp.task('scripts', function() {
 		}
 	}))
 	.pipe(rename({ suffix: '.min' }))
+	.pipe(babel({
+		presets: ['env']
+	}))
 	.pipe(uglify())
 	.pipe(gulp.dest('public/js'))
 	.on('end', function() {
@@ -79,12 +83,12 @@ gulp.task('start', function() {
 		watch: ['server/*', 'server.js']
 	})
 });
- 
+
 // Watch - watcher for changes in scss and js files: 'gulp watch' will run these tasks
 gulp.task('watch', function() {
 	// Watch .scss files
 	gulp.watch('src/sass/**/*.scss', ['styles']);
- 
+
 	// Watch .js files
 	gulp.watch('src/js/script.js', ['scripts']);
 });
