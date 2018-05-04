@@ -129,6 +129,10 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
 	$scope.isNextBackground = false;
 	$scope.hide = false;
 
+	let findDifference = (valueOne, valueTwo) => {
+		return Math.sqrt(Math.pow(valueOne - valueTwo, 2));
+	};
+
 	let getBackground = () => {
 		let date = new Date();
 		date.setDate(date.getDate() + dayOffset);
@@ -136,12 +140,28 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
 		let promise = new Promise((resolve, reject) => {
 			BackgroundApi.get(helpers.toDateIso(date))
 				.then(function (response) {
-					var data = response.data.data[0].attributes;
+					let data = response.data.data[0].attributes;
 
 					//$scope.backgroundUrl = '/media/backgrounds/' + response.data.date + '.jpg';
 
+					let preferredRendition = null;
+
+					// Loop over all of the renditions until one is found with the closest resolution to the current
+					// screen width is found.
+					data.image.renditions.forEach((rendition) => {
+						if (preferredRendition == null) {
+							preferredRendition = rendition;
+						}
+
+						let difference = findDifference(window.innerWidth, rendition.width);
+
+						if (difference < findDifference(window.innerWidth, preferredRendition.width)) {
+							preferredRendition = rendition;
+						}
+					});
+
 					$scope.data = {
-						backgroundUrl: data.image.uri,
+						backgroundUrl: preferredRendition.uri.replace('http:', 'https:'),
 						title: data.image.title,
 						description: $sce.trustAsHtml(data.image.caption),
 						link: data.uri
