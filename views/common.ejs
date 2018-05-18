@@ -11,11 +11,13 @@
 			<style><%- css %></style>
 		<% } %>
 	</head>
-	<%- body %>
-	<script src="/js/angular.min.js"></script>
-	<% if (dev) { %>
-		<script src="/js/script.js"></script>
-	<% } else { %>
-		<script src="/js/script.min.js"></script>
-	<% } %>
+	<body ng-controller="Background" ng-style="{'background-image':'url(' + data.backgroundUrl + ')'}" ng-keypress="press($event)">
+		<%- body %>
+		<script src="/js/angular.min.js"></script>
+		<% if (dev) { %>
+			<script src="/js/script.js"></script>
+		<% } else { %>
+			<script src="/js/script.min.js"></script>
+		<% } %>
+	</body>
 </html>
