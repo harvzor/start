@@ -94,6 +94,12 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 		],
 		[
 			{
+				name: 'Feedly',
+				url: 'https://feedly.com/i/latest'
+			}
+		],
+		[
+			{
 				name: 'GitHub',
 				url: 'https://github.com/'
 			},
