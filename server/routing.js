@@ -8,7 +8,6 @@ var routing = function(dependencies) {
 	}
 
 	let backgroundData = {};
-	let css = null;
 
 	/**
 	 * Get the background data, either from cache or from the NatGeo website.
@@ -34,24 +33,45 @@ var routing = function(dependencies) {
 		return promise;
 	};
 
-	fs.readFile('./public/css/main.css', 'utf8', (err, data) => {
-		if (err) {
-			logger.error(err);
-		} else {
-			css = data;
+	var getCssAsync = () => {
+		let css = null;
 
-			//logger.info('Loaded css file...', css);
-		}
-	});
+		let promise = new Promise((resolve, reject) => {
+			if (css != null) {
+				resolve(css);
+
+				return;
+			}
+
+			fs.readFile('./public/css/main.css', 'utf8', (err, data) => {
+				if (err) {
+					logger.error(err);
+
+					reject(err);
+				} else {
+					css = data;
+
+					resolve(css);
+
+					//logger.info('Loaded css file...', css);
+				}
+			});
+		});
+
+		return promise;
+	};
 
 	// Render index.
 	app.get('/', function(req, res) {
-		res.render('index', {
-			dev: config.dev,
-			layout: 'common',
-			relativeUrl: '',
-			css: css
-		});
+		getCssAsync()
+			.then((css) => {
+				res.render('index', {
+					dev: config.dev,
+					layout: 'common',
+					relativeUrl: '',
+					css: css
+				});
+			});
 	});
 
 	// Backgrounds API
@@ -99,25 +119,32 @@ var routing = function(dependencies) {
 	app.use(function(req, res, next) {
 		logger.info('404 error: %s', req.originalUrl);
 
-		res.status(404).render('error', {
-			layout: 'common',
-			relativeUrl: '404',
-			pageTitle: 'Status: 404',
-			bodyText: '<p>You\'re looking for a page that doesn\'t exist...</p>',
-			css: css
-		});
+		getCssAsync()
+			.then((css) => {
+				res.status(404).render('error', {
+					layout: 'common',
+					relativeUrl: '404',
+					pageTitle: 'Status: 404',
+					bodyText: '<p>You\'re looking for a page that doesn\'t exist...</p>',
+					css: css
+				});
+			});
+
 	});
 
 	app.use(function(err, req, res, next) {
 		logger.error('500 error: %s', err.stack);
 
-		res.status(500).render('error', {
-			layout: 'common',
-			relativeUrl: '500',
-			pageTitle: 'Status: 500',
-			bodyText: '<p>So sorry, but a problem occured! Please email me if this problem persists.</p>',
-			css: css
-		});
+		getCssAsync()
+			.then((css) => {
+				res.status(500).render('error', {
+					layout: 'common',
+					relativeUrl: '500',
+					pageTitle: 'Status: 500',
+					bodyText: '<p>So sorry, but a problem occured! Please email me if this problem persists.</p>',
+					css: css
+				});
+			});
 	});
 };
 
