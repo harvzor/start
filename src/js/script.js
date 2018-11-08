@@ -40,6 +40,10 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 				url: 'https://www.google.co.uk'
 			},
 			{
+				name: 'Translate',
+				url: 'https://translate.google.com/'
+			},
+			{
 				name: 'Duck Duck Go',
 				url: 'https://start.duckduckgo.com'
 			},
@@ -68,6 +72,10 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 				url: 'https://www.youtube.com'
 			},
 			{
+				name: 'Netflix',
+				url: 'https://www.netflix.com/browse'
+			},
+			{
 				name: 'Spotify',
 				url: 'https://open.spotify.com'
 			},
@@ -86,16 +94,20 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 			{
 				name: 'AlternativeTo',
 				url: 'https://alternativeto.net'
-			},
-			{
-				name: 'Toggl',
-				url: 'https://www.toggl.com/app/timer'
 			}
 		],
 		[
 			{
 				name: 'Feedly',
 				url: 'https://feedly.com/i/latest'
+			},
+			{
+				name: 'Toggl',
+				url: 'https://www.toggl.com/app/timer'
+			},
+			{
+				name: 'Trello',
+				url: 'https://trello.com'
 			}
 		],
 		[
