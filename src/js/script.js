@@ -64,7 +64,7 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 			{
 				name: 'Facebook',
 				url: 'https://www.facebook.com'
-			},
+			}
 		],
 		[
 			{
@@ -118,6 +118,10 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 			{
 				name: 'Stack Overflow',
 				url: 'https://stackoverflow.com/'
+			},
+			{
+				name: 'Pluralsight',
+				url: 'https://app.pluralsight.com/'
 			}
 		],
 		[
@@ -132,7 +136,7 @@ StartApp.controller('LinksController', ['$scope', function($scope) {
 			{
 				name: 'EthTrader',
 				url: 'https://www.reddit.com/r/ethtrader/'
-			},
+			}
 		]
 	];
 }]);
