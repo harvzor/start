@@ -49,7 +49,7 @@ gulp.task('styles', function() {
 // Scripts - compile custom js
 gulp.task('scripts', function() {
     return gulp.src([
-        'src/js/script.js'
+        'src/js/scripts.js'
     ])
     .pipe(plumber({
         errorHandler: function (err) {
