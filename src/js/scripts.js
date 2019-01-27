@@ -241,59 +241,61 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
     };
 }]);
 
-StartApp.controller('WordController', ['$scope', '$http', function($scope, $http) {
-    var dayOffset = 0;
+/*
+    StartApp.controller('WordController', ['$scope', '$http', function($scope, $http) {
+        var dayOffset = 0;
 
-    $scope.loaded = false;
-    $scope.isNextWord = false;
-    $scope.data = {
-        word: '',
-        definition: ''
-    };
+        $scope.loaded = false;
+        $scope.isNextWord = false;
+        $scope.data = {
+            word: '',
+            definition: ''
+        };
 
-    var getWord = function(callback) {
-        var date = new Date();
-        date.setDate(date.getDate() + dayOffset);
+        var getWord = function(callback) {
+            var date = new Date();
+            date.setDate(date.getDate() + dayOffset);
 
-        var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            var dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-        $http({
-            method: 'GET',
-            url: '//api.wordnik.com/v4/words.json/wordOfTheDay?api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5&date=' + dateString
-        }).then(function successCallback(response) {
-            $scope.data = {
-                word: response.data.word,
-                definition: response.data.definitions[0].text
-            };
+            $http({
+                method: 'GET',
+                url: '//api.wordnik.com/v4/words.json/wordOfTheDay?api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5&date=' + dateString
+            }).then(function successCallback(response) {
+                $scope.data = {
+                    word: response.data.word,
+                    definition: response.data.definitions[0].text
+                };
 
-            $scope.loaded = true;
+                $scope.loaded = true;
 
-            if (typeof callback !== 'undefined') {
-                callback();
-            }
-        });
-    };
+                if (typeof callback !== 'undefined') {
+                    callback();
+                }
+            });
+        };
 
-    $scope.prevWord = function() {
-        dayOffset--;
+        $scope.prevWord = function() {
+            dayOffset--;
 
-        getWord(function() {
-            $scope.isNextWord = true;
-        });
-    };
+            getWord(function() {
+                $scope.isNextWord = true;
+            });
+        };
 
-    $scope.nextWord = function() {
-        dayOffset++;
+        $scope.nextWord = function() {
+            dayOffset++;
 
-        getWord(function() {
-            if (dayOffset == 0) {
-                $scope.isNextWord = false;
-            }
-        });
-    };
+            getWord(function() {
+                if (dayOffset == 0) {
+                    $scope.isNextWord = false;
+                }
+            });
+        };
 
-    getWord();
-}]);
+        getWord();
+    }]);
+*/
 
 StartApp.controller('AboutImageController', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {
 }]);

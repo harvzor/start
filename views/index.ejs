@@ -9,15 +9,17 @@
             </li>
         </ul>
     </div>
-    <div class="links box center" ng-controller="WordController" ng-show="loaded" ng-cloak>
-        <div class="box-title">
-            Word of the day
+    <% /*
+        <div class="links box center" ng-controller="WordController" ng-show="loaded" ng-cloak>
+            <div class="box-title">
+                Word of the day
+            </div>
+            <p ng-bind="data.word"></p>
+            <p ng-bind="data.definition"></p>
+            <button ng-click="prevWord()"><span class="tick"><span></span></span>Previous word</button>
+            <button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
         </div>
-        <p ng-bind="data.word"></p>
-        <p ng-bind="data.definition"></p>
-        <button ng-click="prevWord()"><span class="tick"><span></span></span>Previous word</button>
-        <button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
-    </div>
+    */ %>
 </div>
 <div class="box about-image" ng-class="{ 'about-image--show': show }" ng-show="loaded && !hide" ng-cloak>
     <div class="box-title" ng-click="show = !show">
