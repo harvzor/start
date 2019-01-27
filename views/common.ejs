@@ -10,6 +10,7 @@
         <% } else { %>
             <style><%- css %></style>
         <% } %>
+        <% /* <link rel="manifest" href="/manifest.json"> */ %>
     </head>
     <body ng-controller="Background" ng-style="{'background-image':'url(' + data.backgroundUrl + ')'}" ng-keypress="press($event)">
         <%- body %>

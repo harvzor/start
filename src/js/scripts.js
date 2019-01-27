@@ -10,6 +10,38 @@ var helpers = function() {
     };
 }();
 
+/**
+ * Somewhat stolen from https://serviceworke.rs/offline-fallback_index_doc.html
+ */
+var serviceWorker = function() {
+    var register = function() {
+        if (navigator.serviceWorker.controller) {
+            console.log(navigator.serviceWorker.controller.scriptURL + ' already registered');
+        } else {
+            // Seems the service worker needs to be available at the root.
+            navigator.serviceWorker.register('/service-worker.js', {
+                scope: './'
+            }).then(function(reg) {
+                console.log(reg.scope + ' registered');
+                console.log('Service worker change, registered the service worker');
+            });
+        }
+    };
+
+    var unregister = function() {
+        navigator.serviceWorker.getRegistration().then(reg => {
+            reg.unregister();
+
+            console.log('unregistered service worker:', reg);
+        })
+    };
+
+    return {
+        register: register,
+        unregister: unregister
+    };
+}();
+
 StartApp.factory('BackgroundApi', ['$http', function($http) {
     var get = function(date) {
         return $http({
@@ -299,3 +331,5 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
 
 StartApp.controller('AboutImageController', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {
 }]);
+
+serviceWorker.register();
