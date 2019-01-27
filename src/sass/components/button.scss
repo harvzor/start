@@ -1,66 +1,66 @@
 /*
 button {
-	padding:5px;
-	border:1px solid black;
-	background-color:transparent;
-	color:white;
+    padding:5px;
+    border:1px solid black;
+    background-color:transparent;
+    color:white;
 
-	&:hover, &:focus {
-		color:black;
+    &:hover, &:focus {
+        color:black;
 
-		span {
-			background-color:white;
-		}
-	}
+        span {
+            background-color:white;
+        }
+    }
 
-	span {
-		display:block;
-		padding:5px;
-	}
+    span {
+        display:block;
+        padding:5px;
+    }
 }
 */
 
 button {
-	background:transparent;
-	border:none;
-	color:white;
+    background:transparent;
+    border:none;
+    color:white;
 
-	&:hover {
-		.tick span:before {
-			content:'x';
-		}
-	}
+    &:hover {
+        .tick span:before {
+            content:'x';
+        }
+    }
 
-	.tick {
-		position:relative;
-		float:left;
-		display:block;
-		//width:15px;
-		height:15px;
-		padding:2px 4px;
-		margin-right:10px;
+    .tick {
+        position:relative;
+        float:left;
+        display:block;
+        //width:15px;
+        height:15px;
+        padding:2px 4px;
+        margin-right:10px;
 
-		&:before, &:after {
-			position:absolute;
-			top:0;
-			font-size:20px;
-		}
+        &:before, &:after {
+            position:absolute;
+            top:0;
+            font-size:20px;
+        }
 
-		&:before {
-			content:'[';
-			left:-5px;
-		}
+        &:before {
+            content:'[';
+            left:-5px;
+        }
 
-		&:after {
-			content:']';
-			right:-4px;
-		}
+        &:after {
+            content:']';
+            right:-4px;
+        }
 
-		span {
-			display:block;
-			width:12px;
-			text-align:center;
-			line-height:13px;
-		}
-	}
+        span {
+            display:block;
+            width:12px;
+            text-align:center;
+            line-height:13px;
+        }
+    }
 }

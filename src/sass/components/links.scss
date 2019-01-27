@@ -1,52 +1,52 @@
 .links-container {
-	display:flex;
-	align-items:center;
-	flex-direction:column;
+    display:flex;
+    align-items:center;
+    flex-direction:column;
 
-	@include screen($xs) {
-		flex-direction:row;
-		height:100%;
-	}
+    @include screen($xs) {
+        flex-direction:row;
+        height:100%;
+    }
 }
 
 .links {
-	float:left;
-	min-width:45%;
-	width:500px;
-	max-width:100%;
-	margin:30px 2.5%;
+    float:left;
+    min-width:45%;
+    width:500px;
+    max-width:100%;
+    margin:30px 2.5%;
 
-	ul {
-		margin:0;
-		padding:0;
-		list-style:none;
-	}
+    ul {
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
 
-	li {
-		margin:20px 0;
+    li {
+        margin:20px 0;
 
-		&:first-child {
-			margin-top:0;
-		}
+        &:first-child {
+            margin-top:0;
+        }
 
-		&:last-child {
-			margin-bottom:0;
-		}
-	}
+        &:last-child {
+            margin-bottom:0;
+        }
+    }
 
-	a {
-		display:block;
-		padding:0 10px;
-		font-size:20px;
-		color:white;
-		text-decoration:none;
-		transform:translateX(0);
-		transition:transform 0.3s;
+    a {
+        display:block;
+        padding:0 10px;
+        font-size:20px;
+        color:white;
+        text-decoration:none;
+        transform:translateX(0);
+        transition:transform 0.3s;
 
-		&:hover, &:focus {
-			outline:0;
-			background-color:white;
-			color:black;
-		}
-	}
+        &:hover, &:focus {
+            outline:0;
+            background-color:white;
+            color:black;
+        }
+    }
 }

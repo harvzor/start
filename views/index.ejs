@@ -1,31 +1,31 @@
 <div class="links-container" ng-hide="hide">
-	<div class="links box" ng-controller="LinksController" ng-cloak>
-		<div class="box-title">
-			Links
-		</div>
-		<ul>
-			<li ng-repeat="linkGroup in links">
-				<a href="{{ link.url }}" ng-repeat="link in linkGroup" ng-bind="link.name"></a>
-			</li>
-		</ul>
-	</div>
-	<div class="links box center" ng-controller="WordController" ng-show="loaded" ng-cloak>
-		<div class="box-title">
-			Word of the day
-		</div>
-		<p ng-bind="data.word"></p>
-		<p ng-bind="data.definition"></p>
-		<button ng-click="prevWord()"><span class="tick"><span></span></span>Previous word</button>
-		<button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
-	</div>
+    <div class="links box" ng-controller="LinksController" ng-cloak>
+        <div class="box-title">
+            Links
+        </div>
+        <ul>
+            <li ng-repeat="linkGroup in links">
+                <a href="{{ link.url }}" ng-repeat="link in linkGroup" ng-bind="link.name"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="links box center" ng-controller="WordController" ng-show="loaded" ng-cloak>
+        <div class="box-title">
+            Word of the day
+        </div>
+        <p ng-bind="data.word"></p>
+        <p ng-bind="data.definition"></p>
+        <button ng-click="prevWord()"><span class="tick"><span></span></span>Previous word</button>
+        <button ng-show="isNextWord" ng-click="nextWord()"><span class="tick"><span></span></span>Next word</button>
+    </div>
 </div>
 <div class="box about-image" ng-class="{ 'about-image--show': show }" ng-show="loaded && !hide" ng-cloak>
-	<div class="box-title" ng-click="show = !show">
-		About image
-	</div>
-	<h2 ng-bind="data.title"></h2>
-	<div ng-bind-html="data.description"></div>
-	<a href="{{ data.link }}" target="_blank">See image on National Geographic</a>
-	<button ng-click="prevBackground()"><span class="tick"><span></span></span>Previous background</button>
-	<button ng-show="isNextBackground" ng-click="nextBackground()"><span class="tick"><span></span></span>Next background</button>
+    <div class="box-title" ng-click="show = !show">
+        About image
+    </div>
+    <h2 ng-bind="data.title"></h2>
+    <div ng-bind-html="data.description"></div>
+    <a href="{{ data.link }}" target="_blank">See image on National Geographic</a>
+    <button ng-click="prevBackground()"><span class="tick"><span></span></span>Previous background</button>
+    <button ng-show="isNextBackground" ng-click="nextBackground()"><span class="tick"><span></span></span>Next background</button>
 </div>
