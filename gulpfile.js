@@ -90,7 +90,7 @@ gulp.task('watch', function() {
 	gulp.watch('src/sass/**/*.scss', ['styles']);
 
 	// Watch .js files
-	gulp.watch('src/js/script.js', ['scripts']);
+	gulp.watch('src/js/scripts.js', ['scripts']);
 });
 
 // Default - runs the scripts, styles and watch tasks: 'gulp' will run this task
