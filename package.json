@@ -4,13 +4,15 @@
   "description": "My start page...",
   "contributors": [
     {
-      "name": "Harvey Williams",
-      "email": ""
+      "name": "Harvey Williams"
     }
   ],
   "repository": {
     "type": "git",
     "url": "harveywilliams.net"
+  },
+  "scripts": {
+    "start": "gulp"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
