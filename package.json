@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "harveywilliams.net"
+    "url": "https://github.com/Harvzor/start"
   },
   "scripts": {
     "start": "gulp"
