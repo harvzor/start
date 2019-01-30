@@ -1,38 +1,13 @@
-const natGeoApi = require('national-geographic-api').API;
 const fs = require('fs');
+
+const backgrounds = require('./backgrounds.js');
 
 // Required dependencies:
 // app, express, config, logger
-var routing = function(dependencies) {
+const routing = function(dependencies) {
     for (let key in dependencies) {
         global[key] = dependencies[key];
     }
-
-    let backgroundData = {};
-
-    /**
-     * Get the background data, either from cache or from the NatGeo website.
-     * @param {string} date Date in ISO format.
-     */
-    var getBackgroundAsync = (date) => {
-        let promise = new Promise((resolve, reject) => {
-            // Data already loaded.
-            if (typeof backgroundData[date] !== 'undefined') {
-                resolve(backgroundData[date]);
-
-                return;
-            }
-
-            natGeoApi.getPhotoOfDay(date)
-                .then((result) => {
-                    backgroundData[date] = result;
-
-                    resolve(result);
-                });
-        });
-
-        return promise;
-    };
 
     var getCssAsync = () => {
         let css = null;
@@ -79,7 +54,7 @@ var routing = function(dependencies) {
     app.get('/background', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
 
-        getBackgroundAsync(req.query.date)
+        backgrounds.getBackground(req.query.date)
             .then((data) => {
                 res.send(data);
             });
