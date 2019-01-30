@@ -1,6 +1,7 @@
 const config = require('./server/config.json');
 
-global.dev = config.dev;
+// Allows config to be used in .ejs files too.
+global.config = config;
 
 // Custom modules
 //const wordnik = require('./server/wordnik.js');

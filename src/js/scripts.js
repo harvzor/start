@@ -341,4 +341,6 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
 StartApp.controller('AboutImageController', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {
 }]);
 
-serviceWorker.register();
+if (window.config.useServiceWorker) {
+    serviceWorker.register();
+}

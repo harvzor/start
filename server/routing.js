@@ -18,7 +18,6 @@ const routing = function(dependencies) {
         css.getCss()
             .then(css => {
                 res.render('index', {
-                    dev: config.dev,
                     layout: 'common',
                     relativeUrl: '',
                     css: css
@@ -64,7 +63,7 @@ const routing = function(dependencies) {
     /////////////////
     app.use(express.static('./public'));
 
-    if(global.dev == true) {
+    if(global.config.dev == true) {
         app.use(express.static('./src'));
     }
 

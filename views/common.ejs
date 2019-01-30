@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html ng-app="StartApp">
     <head lang="en">
-        <title><%= (dev ? "DEV | " : "") %>Start | Harvey Williams</title>
+        <title><%= (global.config.dev ? "DEV | " : "") %>Start | Harvey Williams</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <% if (dev) { /* So that sourcemaps are loaded. */ %>
+        <% if (global.config.dev) { /* So that sourcemaps are loaded. */ %>
             <link href="/css/main.css" rel="stylesheet" type="text/css">
         <% } else { %>
             <style><%- css %></style>
@@ -15,7 +15,10 @@
     <body ng-controller="Background" ng-style="{'background-image':'url(' + data.backgroundUrl + ')'}" ng-keypress="press($event)">
         <%- body %>
         <script src="/js/angular.min.js"></script>
-        <% if (dev) { %>
+        <script>
+            window.config = <%- JSON.stringify({ dev: global.config.dev, useServiceWorker: global.config.useServiceWorker }) %>;
+        </script>
+        <% if (global.config.dev) { %>
             <script src="/js/scripts.js"></script>
         <% } else { %>
             <script src="/js/scripts.min.js"></script>
