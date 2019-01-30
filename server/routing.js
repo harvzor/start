@@ -1,8 +1,7 @@
-const fs = require('fs');
-
 const backgrounds = require('./backgrounds.js');
 const logger = require('./logger.js');
 const config = require('./config.json');
+const css = require('./css.js');
 
 // Required dependencies:
 // app, express, config, logger
@@ -11,38 +10,10 @@ const routing = function(dependencies) {
         global[key] = dependencies[key];
     }
 
-    var getCssAsync = () => {
-        let css = null;
-
-        let promise = new Promise((resolve, reject) => {
-            if (css != null) {
-                resolve(css);
-
-                return;
-            }
-
-            fs.readFile('./public/css/main.css', 'utf8', (err, data) => {
-                if (err) {
-                    logger.error(err);
-
-                    reject(err);
-                } else {
-                    css = data;
-
-                    resolve(css);
-
-                    //logger.info('Loaded css file...', css);
-                }
-            });
-        });
-
-        return promise;
-    };
-
     // Render index.
     app.get('/', function(req, res) {
-        getCssAsync()
-            .then((css) => {
+        css.getCss()
+            .then(css => {
                 res.render('index', {
                     dev: config.dev,
                     layout: 'common',
@@ -113,8 +84,8 @@ const routing = function(dependencies) {
     app.use(function(err, req, res, next) {
         logger.error('500 error: %s', err.stack);
 
-        getCssAsync()
-            .then((css) => {
+        css.getCss()
+            .then(css => {
                 res.status(500).render('error', {
                     layout: 'common',
                     relativeUrl: '500',
