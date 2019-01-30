@@ -1,7 +1,8 @@
-'use strict';
+const natGeoApi = require('national-geographic-api').API;
+const fs = require('fs');
 
 // Required dependencies:
-// app, fs, express, config, logger, cheerio, natgeo, request
+// app, express, config, logger
 var routing = function(dependencies) {
     for (let key in dependencies) {
         global[key] = dependencies[key];
@@ -22,7 +23,7 @@ var routing = function(dependencies) {
                 return;
             }
 
-            natgeo.getPhotoOfDay(date)
+            natGeoApi.getPhotoOfDay(date)
                 .then((result) => {
                     backgroundData[date] = result;
 

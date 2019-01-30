@@ -36,9 +36,18 @@ var serviceWorker = function() {
         })
     };
 
+    var deleteCaches = async function() {
+        var cacheKeys = await caches.keys();
+
+        cacheKeys.forEach(function(cacheKey) {
+            caches.delete(cacheKey);
+        });
+    };
+
     return {
         register: register,
-        unregister: unregister
+        unregister: unregister,
+        deleteCaches: deleteCaches
     };
 }();
 

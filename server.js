@@ -7,19 +7,14 @@ global.dev = config.dev;
 /////////////////
 
 // Node modules
-var express = require('express');
-var compression = require('compression');
-var expressLayouts = require('express-ejs-layouts');
-var fs = require('fs');
-var bunyan = require('bunyan');
-var http = require('http');
-var cheerio = require('cheerio');
-var request = require('request');
-var natgeo = require('national-geographic-api').API
+const express = require('express');
+const compression = require('compression');
+const expressLayouts = require('express-ejs-layouts');
+const bunyan = require('bunyan');
 
 // Custom modules
 //var wordnik = require('./server/wordnik.js');
-var helpers = require('./server/helpers.js');
+//const helpers = require('./server/helpers.js');
 
 var logger = bunyan.createLogger({
     name: 'portfolio',
@@ -65,20 +60,16 @@ app.use(expressLayouts)
 
 require('./server/routing.js')({
     'app': app,
-    'fs': fs,
     'express': express,
     'config': config,
     'logger': logger,
-    'cheerio': cheerio,
-    'natgeo': natgeo,
-    'request': request
 });
 
 /////////////////
 // Inititialise
 /////////////////
 
-if(config.type == 'node') {
+if (config.type == 'node') {
     // Used for Node server.
     var server = app.listen(config.port, config.ip, function () {
         var host = server.address().address;
@@ -92,4 +83,3 @@ if(config.type == 'node') {
 } else {
     logger.error('Error: wrong config.type set');
 }
-
