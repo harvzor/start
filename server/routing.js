@@ -1,6 +1,8 @@
 const fs = require('fs');
 
 const backgrounds = require('./backgrounds.js');
+const logger = require('./logger.js');
+const config = require('./config.json');
 
 // Required dependencies:
 // app, express, config, logger

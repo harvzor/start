@@ -10,32 +10,11 @@ global.dev = config.dev;
 const express = require('express');
 const compression = require('compression');
 const expressLayouts = require('express-ejs-layouts');
-const bunyan = require('bunyan');
 
 // Custom modules
-//var wordnik = require('./server/wordnik.js');
+//const wordnik = require('./server/wordnik.js');
 //const helpers = require('./server/helpers.js');
-
-var logger = bunyan.createLogger({
-    name: 'portfolio',
-    streams: [
-        {
-            level: 'info',
-            path: 'logs/log.txt',
-            stream: process.stdout
-        },
-        {
-            level: 'warn',
-            path: 'logs/log.txt',
-            stream: process.stdout
-        },
-        {
-            level: 'error',
-            path: 'logs/log.txt',
-            stream: process.stdout
-        }
-    ]
-});
+const logger = require('./server/logger.js');
 
 var app = express();
 app.use(compression());
@@ -60,9 +39,7 @@ app.use(expressLayouts)
 
 require('./server/routing.js')({
     'app': app,
-    'express': express,
-    'config': config,
-    'logger': logger,
+    'express': express
 });
 
 /////////////////
