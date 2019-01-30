@@ -1,3 +1,6 @@
+const express = require('express');
+
+const app =  require('./app.js');
 const backgrounds = require('./backgrounds.js');
 const logger = require('./logger.js');
 const config = require('./config.json');
@@ -95,6 +98,6 @@ const routing = function(dependencies) {
                 });
             });
     });
-};
+}();
 
 module.exports = routing;
