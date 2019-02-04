@@ -18,10 +18,6 @@
         <script>
             window.config = <%- JSON.stringify({ dev: global.config.dev, useServiceWorker: global.config.useServiceWorker }) %>;
         </script>
-        <% if (global.config.dev) { %>
-            <script src="/js/scripts.js"></script>
-        <% } else { %>
-            <script src="/js/scripts.min.js"></script>
-        <% } %>
+        <script src="/js/scripts.js"></script>
     </body>
 </html>

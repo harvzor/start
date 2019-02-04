@@ -8,7 +8,7 @@ global.config = config;
 //const helpers = require('./server/helpers.js');
 const logger = require('./server/logger.js');
 const app = require('./server/app.js');
-const routing = require('./server/routing.js');
+require('./server/routing.js');
 
 /////////////////
 // Functions

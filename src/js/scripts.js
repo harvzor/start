@@ -111,7 +111,9 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
         date.setDate(date.getDate() + dayOffset);
 
         let promise = new Promise((resolve, reject) => {
-            BackgroundApi.get(helpers.toDateIso(date))
+            let dateString = helpers.toDateIso(date);
+
+            BackgroundApi.get(dateString)
                 .then(function (response) {
                     let data = response.data.data[0].attributes;
 
@@ -134,7 +136,8 @@ StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($
                     });
 
                     $scope.data = {
-                        backgroundUrl: preferredRendition.uri.replace('http:', 'https:'),
+                        backgroundUrl: `/background?date=${dateString}&width=${preferredRendition.width}`,
+                        //backgroundUrl: preferredRendition.uri.replace('http:', 'https:'),
                         title: data.image.title,
                         description: $sce.trustAsHtml(data.image.caption),
                         link: data.uri

@@ -7,7 +7,7 @@ const backgrounds = function() {
      * Get the background data, either from cache or from the NatGeo website.
      * @param {string} date Date in ISO format.
      */
-    var getBackground = (date) => {
+    var getBackgroundData = (date) => {
         return new Promise((resolve, reject) => {
             // Data already loaded.
             if (typeof backgroundData[date] !== 'undefined') {
@@ -28,8 +28,20 @@ const backgrounds = function() {
         });
     };
 
+    let getBackgroundUri = async(date, width) => {
+        let backgroundDataString = await getBackgroundData(date);
+
+        let data = JSON.parse(backgroundDataString);
+
+        let render = data.data[0].attributes.image.renditions
+            .find(rendition => rendition.width === width);
+
+        return render.uri;
+    };
+
     return {
-        getBackground: getBackground
+        getBackground: getBackgroundData,
+        getBackgroundUri: getBackgroundUri
     };
 }();
 

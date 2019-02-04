@@ -1,4 +1,5 @@
 const express = require('express');
+const request = require('request');
 
 const app =  require('./app.js');
 const backgrounds = require('./backgrounds.js');
@@ -26,37 +27,22 @@ const routing = function(dependencies) {
     });
 
     // Backgrounds API
-    app.get('/background', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
+    app.get('/background', async(req, res) => {
+        if (req.query.width) {
+            let imageUri = await backgrounds.getBackgroundUri(req.query.date, req.query.width);
 
-        backgrounds.getBackground(req.query.date)
-            .then((data) => {
-                res.send(data);
-            });
+            req
+                .pipe(request(imageUri))
+                .pipe(res);
+        } else {
+            res.setHeader('Content-Type', 'application/json');
 
-        /*
-            backgrounds.getDay(new Date(), function(data) {
-                res.setHeader('Content-Type', 'application/json');
-
-                if (typeof req.query.pretty !== 'undefined' && req.query.pretty.toLowerCase() === 'true') {
-                    res.send(JSON.stringify(data, null, 4));
-                } else {
-                    res.send(JSON.stringify(data));
-                }
-            });
-        */
+            backgrounds.getBackground(req.query.date)
+                .then(data => {
+                    res.send(data);
+                });
+        }
     });
-
-    /*
-        // Backgrounds API
-        app.get('/api/background/get', function(req, res) {
-            var date = new Date(req.query.date);
-
-            backgrounds.getDay(date, function(file) {
-                res.send(file);
-            });
-        });
-    */
 
     /////////////////
     // Statuses

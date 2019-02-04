@@ -9,41 +9,24 @@ self.addEventListener('fetch', function(event) {
             caches.open(cacheName)
                 .then(function(cache) {
                     return cache.match(event.request)
-                        .then(function (response) {
-                            if (!response) {
-                                fetch(event.request.url, { mode: 'no-cors' })
-                                    .then(function(response) {
-                                        if (!response.ok) {
-                                            console.log(event.request.url, response);
+                        .then(async function(response) {
+                            if (response) {
+                                console.log(event.request.url + ' from cache');
 
-                                            throw new TypeError('Bad response status of');
-                                        }
-
-                                        return cache.put(event.request.url, response);
-                                    })
-                                    .catch(function(e) {
-                                        console.error(e);
-                                    });
-
-                                /*
-                                caches.open(cacheName)
-                                    .then(function (cache) {
-                                        return cache.add(event.request.url);
-                                    })
-                                    .catch(function(e) {
-                                        console.error(e);
-                                    });
-                                */
-
-                                console.log(event.request.url + ' from fetch')
-
-                                // This is bad as the request has already been made above (thus a double request occurs).
-                                return fetch(event.request, { mode: 'no-cors' });
+                                return response;
                             }
 
-                            console.log(event.request.url + ' from cache')
+                            console.log(event.request.url + ' from fetch');
 
-                            return response;
+                            let fetchResponse = await fetch(event.request.url);
+
+                            if (fetchResponse.ok) {
+                                cache.put(event.request.url, fetchResponse.clone());
+                            } else {
+                                console.warn('Error caching ' + event.request.url + ' perhaps because it\'s an external resource which has not explicitly said that this site may fetch from it');
+                            }
+
+                            return fetchResponse;
                         })
                 })
         )
