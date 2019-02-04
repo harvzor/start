@@ -67,119 +67,29 @@ StartApp.factory('BackgroundApi', ['$http', function($http) {
     }
 }]);
 
-StartApp.controller('LinksController', ['$scope', function($scope) {
-    $scope.links = [
-        [
-            {
-                name: 'Localhost',
-                url: 'http://localhost:3000'
-            }
-        ],
-        [
-            {
-                name: 'Google',
-                url: 'https://www.google.co.uk'
-            },
-            {
-                name: 'Translate',
-                url: 'https://translate.google.com/'
-            },
-            {
-                name: 'Duck Duck Go',
-                url: 'https://start.duckduckgo.com'
-            },
-            {
-                name: 'Maps',
-                url: 'https://google.co.uk/maps'
-            }
-        ],
-        [
-            {
-                name: 'Imgur',
-                url: 'https://www.imgur.com'
-            },
-            {
-                name: '4chan',
-                url: 'https://www.4chan.org'
-            },
-            {
-                name: 'Facebook',
-                url: 'https://www.facebook.com'
-            }
-        ],
-        [
-            {
-                name: 'YouTube',
-                url: 'https://www.youtube.com'
-            },
-            {
-                name: 'Netflix',
-                url: 'https://www.netflix.com/browse'
-            },
-            {
-                name: 'Spotify',
-                url: 'https://open.spotify.com'
-            },
-            /*
-                {
-                    name: 'Plex',
-                    url: 'https://bigkthx.com/web/index.html'
-                },
-            */
-        ],
-        [
-            {
-                name: 'Amazon',
-                url: 'https://www.amazon.co.uk'
-            },
-            {
-                name: 'AlternativeTo',
-                url: 'https://alternativeto.net'
-            }
-        ],
-        [
-            {
-                name: 'Feedly',
-                url: 'https://feedly.com/i/latest'
-            },
-            {
-                name: 'Toggl',
-                url: 'https://www.toggl.com/app/timer'
-            },
-            {
-                name: 'Trello',
-                url: 'https://trello.com'
-            }
-        ],
-        [
-            {
-                name: 'GitHub',
-                url: 'https://github.com/'
-            },
-            {
-                name: 'Stack Overflow',
-                url: 'https://stackoverflow.com/'
-            },
-            {
-                name: 'Pluralsight',
-                url: 'https://app.pluralsight.com/'
-            }
-        ],
-        [
-            {
-                name: 'CoinLib',
-                url: 'https://coinlib.io'
-            },
-            {
-                name: 'CoinMarketCap',
-                url: 'https://coinmarketcap.com'
-            },
-            {
-                name: 'EthTrader',
-                url: 'https://www.reddit.com/r/ethtrader/'
-            }
-        ]
-    ];
+StartApp.factory('LinksApi', ['$http', function($http) {
+    var get = function() {
+        return $http({
+            method: 'GET',
+            url: '/links.json'
+        });
+    };
+
+    return {
+        get: get
+    }
+}]);
+
+StartApp.controller('LinksController', ['$scope', 'LinksApi', function($scope, LinksApi) {
+    $scope.links = [];
+
+    LinksApi.get()
+        .then(response => {
+            let data = response.data;
+
+            $scope.links = data;
+        });
+
 }]);
 
 StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {
