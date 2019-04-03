@@ -1,0 +1,98 @@
+[
+    {
+        "ip": "any",
+        "linkGroups": [
+            [
+                {
+                    "name": "Localhost",
+                    "url": "http://localhost:3000"
+                }
+            ],
+            [
+                {
+                    "name": "Translate",
+                    "url": "https://translate.google.com/"
+                },
+                {
+                    "name": "Maps",
+                    "url": "https://google.co.uk/maps"
+                }
+            ],
+            [
+                {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com"
+                },
+                {
+                    "name": "Netflix",
+                    "url": "https://www.netflix.com/browse"
+                },
+                {
+                    "name": "Spotify",
+                    "url": "https://open.spotify.com"
+                }
+            ],
+            [
+                {
+                    "name": "Feedly",
+                    "url": "https://feedly.com/i/latest"
+                },
+                {
+                    "name": "Toggl",
+                    "url": "https://www.toggl.com/app/timer"
+                },
+                {
+                    "name": "Trello",
+                    "url": "https://trello.com"
+                }
+            ],
+            [
+                {
+                    "name": "GitHub",
+                    "url": "https://github.com/"
+                },
+                {
+                    "name": "Stack Overflow",
+                    "url": "https://stackoverflow.com/"
+                }
+            ],
+            [
+                {
+                    "name": "CoinLib",
+                    "url": "https://coinlib.io"
+                },
+                {
+                    "name": "CoinMarketCap",
+                    "url": "https://coinmarketcap.com"
+                }
+            ]
+        ]
+    },
+    {
+        "ip": "212.117.65.6",
+        "linkGroups": [
+            [
+                {
+                    "name": "Asana",
+                    "url": "https://app.asana.com/"
+                },
+                {
+                    "name": "Calendar",
+                    "url": "https://calendar.google.com/calendar/b/1/r"
+                },
+                {
+                    "name": "Travis CI",
+                    "url": "https://travis-ci.com/"
+                },
+                {
+                    "name": "AppVeyor",
+                    "url": "https://ci.appveyor.com"
+                },
+                {
+                    "name": "LastPass",
+                    "url": "https://lastpass.com/?&ac=1&fromwebsite=1&newvault=1&nk=1"
+                }
+            ]
+        ]
+    }
+]

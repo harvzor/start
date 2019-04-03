@@ -6,6 +6,7 @@ const backgrounds = require('./backgrounds.js');
 const logger = require('./logger.js');
 const config = require('./config.json');
 const css = require('./css.js');
+const fs = require('fs');
 
 // Required dependencies:
 // app, express, config, logger
@@ -42,6 +43,20 @@ const routing = function(dependencies) {
                     res.send(data);
                 });
         }
+    });
+
+    // Links api
+    app.get('/links', async(req, res) => {
+        let ipGroups = await JSON.parse(fs.readFile('links.json'));
+        let links = [];
+
+        for (let ipGroup of ipGroups) {
+            if (ipGroup.ip === "any" || req.connection.remoteAddress === ipGroup.ip) {
+                links.concat(ipGroup.linkGroups);
+            }
+        }
+
+        res.send(links);
     });
 
     /////////////////
