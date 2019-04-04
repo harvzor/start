@@ -95,4 +95,3 @@ gulp.task('watch', function() {
 
 // Default - runs the scripts, styles and watch tasks: 'gulp' will run this task
 gulp.task('default', ['styles', 'scripts', 'start', 'watch'])
-

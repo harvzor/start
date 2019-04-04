@@ -71,7 +71,7 @@ StartApp.factory('LinksApi', ['$http', function($http) {
     var get = function() {
         return $http({
             method: 'GET',
-            url: '/links.json'
+            url: '/links'
         });
     };
 
@@ -89,7 +89,6 @@ StartApp.controller('LinksController', ['$scope', 'LinksApi', function($scope, L
 
             $scope.links = data;
         });
-
 }]);
 
 StartApp.controller('Background', ['$scope', '$sce', 'BackgroundApi', function($scope, $sce, BackgroundApi) {

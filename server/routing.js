@@ -47,12 +47,15 @@ const routing = function(dependencies) {
 
     // Links api
     app.get('/links', async(req, res) => {
-        let ipGroups = await JSON.parse(fs.readFile('links.json'));
+        let ipGroups = require('./links.json');
         let links = [];
 
         for (let ipGroup of ipGroups) {
-            if (ipGroup.ip === "any" || req.connection.remoteAddress === ipGroup.ip) {
-                links.concat(ipGroup.linkGroups);
+            if (ipGroup.ip === "any"
+                || req.connection.remoteAddress === '127.0.0.1'
+                || req.connection.remoteAddress === ipGroup.ip
+            ) {
+                links = links.concat(ipGroup.linkGroups);
             }
         }
 
