@@ -5,8 +5,8 @@
 body {
     background-color:black;
     background-size:cover;
-    background-position:fixed;
-
+    background-attachment:fixed;
+    background-position:center;
 
     @include screen($xs) {
         overflow:hidden;
