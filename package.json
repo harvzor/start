@@ -12,7 +12,7 @@
     "url": "https://github.com/Harvzor/start"
   },
   "scripts": {
-    "start": "gulp"
+    "start": "gulp | .\\node_modules\\.bin\\bunyan -o short"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
